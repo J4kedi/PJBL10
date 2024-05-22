@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import services.GeradorCodUnico;
 
 public class Usuario {
+    private Integer id; 
     private GeradorCodUnico gerador = new GeradorCodUnico();
     private ArrayList<Endereco> enderecos = new ArrayList<>();
     private String nome;
@@ -11,17 +12,19 @@ public class Usuario {
     private String email;
     private String senha;
     private String username;
-    private Integer id;
+    private Integer quantidadeEnderecos;
 
-    public Usuario(String nome, String cpf, String email, String senha, String username, Endereco endereco) {
+    public Usuario(String nome, String cpf, String email, String senha, String username) {
         this.nome = nome;
         this.cpf = cpf;
         this.username = username;
         this.email = email;
         this.senha = senha;
         this.id = gerador.getCodigo();
+    }
 
-        enderecos.add(endereco);
+    public void adicionarEndereco(Endereco e) {
+        enderecos.add(e);
     }
     
     public String getNome() {

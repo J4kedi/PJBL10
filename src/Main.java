@@ -10,11 +10,11 @@ public class Main {
     public static void main(String[] args) {
         GerenciarDados gerencia = new GerenciarDados();
 
-        Endereco enderecoJorge = new Endereco("82340111", "PR", "Curitiba", "Rua do Jorge", 123);
-        Usuario jorge = new Usuario("Jorge", "12345678910", "jorge@gmail.com", "123", "jorgeAnao", enderecoJorge);
+        Usuario jorge = new Usuario("Jorge", "12345678910", "jorge@gmail.com", "123", "jorgeAnao");
+        Endereco enderecoJorge = new Endereco(jorge.getId(), "82340111", "PR", "Curitiba", "Rua do Jorge", 123);
 
+        jorge.adicionarEndereco(enderecoJorge);
         gerencia.salvarUsuarios(jorge);
-
         gerencia.carregarUsuarios();
 
         Color corFundo = Color.decode("#06ADBF");

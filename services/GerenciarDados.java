@@ -8,36 +8,52 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
+import classes.Endereco;
 import classes.Usuario;
 
 public class GerenciarDados {
-    private static final String FILE_PATH = "../dados/dados.txt";
-    private static final File txtUsuario = new File(FILE_PATH);
+    private static final String FILE_PATH_USUARIOS = "dados\\usuarios\\dados.txt";
+    private static final String FILE_PATH_ENDERECOS = "dados\\enderecos\\dados.txt";
+    private static final File txtUsuario = new File(FILE_PATH_USUARIOS);
+    private static final File txtEndereco = new File(FILE_PATH_ENDERECOS);
     private static final String DELIMITER = ",";
     private static Map<Integer, Usuario> usuarios = new HashMap<>();
     
     public GerenciarDados(){
-  //      carregarUsuarios();
+        CreateFile();
+        carregarUsuarios();
     }
 
     private void CreateFile() {
-        if () {
-            
+        try {
+            if (txtUsuario.createNewFile()) {
+                System.out.println("File created: " + txtUsuario.getName());            
+                System.out.println("Path: " + txtUsuario.getAbsolutePath());            
+            } else {
+                System.out.println("Arquivo já existente");
+            }
+        } catch (IOException e) {
+            System.out.println("Erro ao criar arquivo");
+            e.printStackTrace();
         }
     }
 
     public void carregarUsuarios() {
-        try (BufferedReader reader = new BufferedReader(new FileReader(FILE_PATH))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(FILE_PATH_USUARIOS))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(DELIMITER);
-                int id = Integer.parseInt(parts[0]);
                 String nome = parts[1];
+                String cpf = parts[3];
                 String email = parts[2];
+                String senha = parts[4];
+                String username = parts[5];
 
-                System.out.println(line);
-            //    Usuario usuario = new Usuario(nome, cpf, email, senha, username, endereco); // Supondo que você tenha um construtor de Usuario
-            //    usuarios.put(usuario.getId(), usuario);
+                Endereco endereco = new Endereco(Integer.parseInt(parts[0]), parts[6], parts[7], parts[8], parts[9], Integer.parseInt(parts[10]));
+                Usuario usuario = new Usuario(nome, cpf, email, senha, username);
+                usuario.adicionarEndereco(endereco);
+
+                usuarios.put(usuario.getId(), usuario);
             }
         } catch (IOException e) {
             System.out.println("Um erro ocorreu ao ler os usuários.");
@@ -46,8 +62,8 @@ public class GerenciarDados {
     }
 
     public void salvarUsuarios(Usuario u) {
-        try (PrintWriter writer = new PrintWriter(new FileWriter(FILE_PATH))) {
-            writer.println(u.getId() + DELIMITER + u.getNome() + DELIMITER + u.getEmail());
+        try (PrintWriter writer = new PrintWriter(new FileWriter(FILE_PATH_USUARIOS))) {
+            writer.println(u.getId() + DELIMITER + u.getNome() + DELIMITER + u.getCpf() + DELIMITER + u.getEmail() + DELIMITER + u.getSenha() + DELIMITER + u.getUsername() + DELIMITER + u.getEnderecos());
         } catch (IOException e) {
             System.out.println("Um erro ocorreu ao salvar os usuários.");
             e.printStackTrace();
