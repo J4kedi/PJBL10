@@ -44,12 +44,21 @@ public class GerenciarDados {
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(DELIMITER);
                 String nome = parts[1];
-                String cpf = parts[3];
-                String email = parts[2];
+                String cpf = parts[2];
+                String email = parts[3];
                 String senha = parts[4];
                 String username = parts[5];
+                String id = parts[0];
+                String rua = parts[6];
+                String cidade = parts[7];
+                String estado = parts[8];
 
-                Endereco endereco = new Endereco(Integer.parseInt(parts[0]), parts[6], parts[7], parts[8], parts[9], Integer.parseInt(parts[10]));
+                System.out.println(id);
+                System.out.println(rua);
+                System.out.println(cidade);
+                System.out.println(estado);
+
+                Endereco endereco = new Endereco(Integer.parseInt(id), parts[6], parts[7], parts[8], parts[9], Integer.parseInt(parts[10]));
                 Usuario usuario = new Usuario(nome, cpf, email, senha, username);
                 usuario.adicionarEndereco(endereco);
 
@@ -69,5 +78,4 @@ public class GerenciarDados {
             e.printStackTrace();
         }
     }
-
 }
