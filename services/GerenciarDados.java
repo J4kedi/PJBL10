@@ -13,9 +13,7 @@ import classes.Usuario;
 
 public class GerenciarDados {
     private static final String FILE_PATH_USUARIOS = "dados\\usuarios\\dados.txt";
-    private static final String FILE_PATH_ENDERECOS = "dados\\enderecos\\dados.txt";
     private static final File txtUsuario = new File(FILE_PATH_USUARIOS);
-    private static final File txtEndereco = new File(FILE_PATH_ENDERECOS);
     private static final String DELIMITER = ",";
     private static Map<Integer, Usuario> usuarios = new HashMap<>();
     
@@ -27,10 +25,11 @@ public class GerenciarDados {
     private void CreateFile() {
         try {
             if (txtUsuario.createNewFile()) {
-                System.out.println("File created: " + txtUsuario.getName());            
-                System.out.println("Path: " + txtUsuario.getAbsolutePath());            
+                System.out.println("Arquivo Criado: " + txtUsuario.getName());            
+                System.out.println("Caminho: " + txtUsuario.getAbsolutePath());            
             } else {
                 System.out.println("Arquivo já existente");
+                System.out.println("Tudo funcionando corretamente...");
             }
         } catch (IOException e) {
             System.out.println("Erro ao criar arquivo");
@@ -50,15 +49,13 @@ public class GerenciarDados {
                 String username = parts[5];
                 String id = parts[0];
                 String rua = parts[6];
-                String cidade = parts[7];
+                String cep = parts[7];
                 String estado = parts[8];
+                String cidade = parts[9];
+                String numeroCasa = parts[10].replace(" ", "");
+                String numeroCasaTratado = numeroCasa.replace("]", "");
 
-                System.out.println(id);
-                System.out.println(rua);
-                System.out.println(cidade);
-                System.out.println(estado);
-
-                Endereco endereco = new Endereco(Integer.parseInt(id), parts[6], parts[7], parts[8], parts[9], Integer.parseInt(parts[10]));
+                Endereco endereco = new Endereco(Integer.parseInt(id), cep, estado, cidade, rua, Integer.parseInt(numeroCasaTratado));
                 Usuario usuario = new Usuario(nome, cpf, email, senha, username);
                 usuario.adicionarEndereco(endereco);
 
@@ -73,9 +70,14 @@ public class GerenciarDados {
     public void salvarUsuarios(Usuario u) {
         try (PrintWriter writer = new PrintWriter(new FileWriter(FILE_PATH_USUARIOS))) {
             writer.println(u.getId() + DELIMITER + u.getNome() + DELIMITER + u.getCpf() + DELIMITER + u.getEmail() + DELIMITER + u.getSenha() + DELIMITER + u.getUsername() + DELIMITER + u.getEnderecos());
+            System.out.println("Dados carregados com sucesso!");
         } catch (IOException e) {
             System.out.println("Um erro ocorreu ao salvar os usuários.");
             e.printStackTrace();
         }
+    }
+
+    public static Map<Integer, Usuario> getUsuarios() {
+        return usuarios;
     }
 }

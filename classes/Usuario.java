@@ -12,7 +12,6 @@ public class Usuario {
     private String email;
     private String senha;
     private String username;
-    private Integer quantidadeEnderecos;
 
     public Usuario(String nome, String cpf, String email, String senha, String username) {
         this.nome = nome;

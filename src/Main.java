@@ -1,20 +1,19 @@
 import javax.swing.*;
 
-import classes.Endereco;
-import classes.Usuario;
 import services.GerenciarDados;
+import services.Login;
+
 import java.awt.Color;
+import java.awt.Cursor;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class Main {
-    
+    private static GerenciarDados gerencia = new GerenciarDados();
+
     public static void main(String[] args) {
-        GerenciarDados gerencia = new GerenciarDados();
-
-        Usuario jorge = new Usuario("Jorge", "12345678910", "jorge@gmail.com", "123", "jorgeAnao");
-        Endereco enderecoJorge = new Endereco(jorge.getId(), "82340111", "PR", "Curitiba", "Rua do Jorge", 123);
-
-        jorge.adicionarEndereco(enderecoJorge);
-        gerencia.salvarUsuarios(jorge);
         gerencia.carregarUsuarios();
 
         Color corFundo = Color.decode("#06ADBF");
@@ -54,7 +53,24 @@ public class Main {
         JLabelWithLine mensagemCliqueAqui = new JLabelWithLine("clique aqui!");
         mensagemCliqueAqui.setBounds(295, 210, 70, 20);
         mensagemCliqueAqui.setForeground(corTextoLink);
-                
+        mensagemCliqueAqui.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        mensagemCliqueAqui.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                new Cadastro();
+            }
+        });
+
+        submitButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String login = inputEmail.getText();
+                String senha = new String(inputSenha.getPassword());
+
+                Login logar = new Login(login, senha, gerencia.getUsuarios());
+            }
+        });
+
         // Adicionando os componentes à janela
         frame.add(inputEmail);
         frame.add(labelEmail);
