@@ -15,7 +15,7 @@ public class GerenciarDados {
     private static final String FILE_PATH_USUARIOS = "dados\\usuarios\\dados.txt";
     private static final File txtUsuario = new File(FILE_PATH_USUARIOS);
     private static final String DELIMITER = ",";
-    private static Map<Integer, Usuario> usuarios = new HashMap<>();
+    private Map<Integer, Usuario> usuarios = new HashMap<>();
     
     public GerenciarDados(){
         CreateFile();
@@ -28,7 +28,7 @@ public class GerenciarDados {
                 System.out.println("Arquivo Criado: " + txtUsuario.getName());            
                 System.out.println("Caminho: " + txtUsuario.getAbsolutePath());            
             } else {
-                System.out.println("Arquivo já existente");
+                System.out.println("\nArquivo já existente");
                 System.out.println("Tudo funcionando corretamente...");
             }
         } catch (IOException e) {
@@ -77,7 +77,7 @@ public class GerenciarDados {
         }
     }
 
-    public static Map<Integer, Usuario> getUsuarios() {
+    public Map<Integer, Usuario> getUsuarios() {
         return usuarios;
     }
 }

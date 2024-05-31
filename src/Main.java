@@ -57,7 +57,7 @@ public class Main {
         mensagemCliqueAqui.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                new Cadastro();
+                new Cadastro(frame, gerencia);
             }
         });
 
@@ -83,6 +83,7 @@ public class Main {
         // Tamanho da janela
         frame.setSize(700, 500);
         frame.setLayout(null);
+        frame.setResizable(false);
 
         // Mostra a janela
         frame.setVisible(true);
