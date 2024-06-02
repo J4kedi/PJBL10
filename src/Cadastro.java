@@ -1,28 +1,25 @@
 import javax.swing.*;
-
+import classes.Endereco;
+import classes.Usuario;
 import services.GerenciarDados;
-
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Map;
 import java.util.stream.IntStream;
 
 public class Cadastro extends JDialog {
-    private GerenciarDados gerencia;
-
     public Cadastro(JFrame parent, GerenciarDados gerencia) {
-        super(parent, "Cadastro", true); // Torna o JDialog modal
-
-        this.gerencia = gerencia;
+        super(parent, "Cadastro", true);
 
         Color corFundo = Color.decode("#06ADBF");
         Color corTexto = Color.decode("#0B4359");
         
         setLayout(new BorderLayout());
         
-        JPanel cadastro = new JPanel(new GridLayout(6, 2));
+        JPanel cadastro = new JPanel(new GridLayout(11, 2));
         cadastro.setBackground(corFundo);
 
         JTextField inputNome = new JTextField(20);
@@ -36,17 +33,35 @@ public class Cadastro extends JDialog {
         JLabel labelEmail = new JLabel("Email: ");
         inputEmail.setName("email");
         
-        JPasswordField inputSenha = new JPasswordField(20);
-        JLabel labelSenha = new JLabel("Senha: ");
-        
         JTextField inputUsername = new JTextField(20);
         JLabel labelUsername = new JLabel("Username: ");
         inputUsername.setName("username");
 
+        JPasswordField inputSenha = new JPasswordField(20);
+        JLabel labelSenha = new JLabel("Senha: ");
+        
+        JPasswordField inputConfirmarSenha = new JPasswordField();
+        JLabel labelConfirmarSenha = new JLabel("Confirmar senha: ");
+
+        JTextField inputCep = new JTextField();
+        JLabel labelCep = new JLabel("CEP: ");
+
+        JTextField inputEstado = new JTextField();
+        JLabel labelEstado = new JLabel("Estado: ");
+
+        JTextField inputCidade = new JTextField();
+        JLabel labelCidade = new JLabel("Cidade: ");
+
+        JTextField inputRua = new JTextField();
+        JLabel labelRua = new JLabel("Rua: ");
+
+        JTextField inputNumeroCasa = new JTextField();
+        JLabel labelNumeroCasa = new JLabel("Número: ");
+
         ArrayList<JTextField> inputs = new ArrayList<>();
         ArrayList<JLabel> labels = new ArrayList<>();
-        Collections.addAll(inputs, inputNome, inputCpf, inputEmail, inputSenha, inputUsername);
-        Collections.addAll(labels, labelNome, labelCpf, labelEmail, labelSenha, labelUsername);
+        Collections.addAll(inputs, inputNome, inputCpf, inputEmail, inputUsername, inputSenha, inputConfirmarSenha, inputCep, inputEstado, inputCidade, inputRua, inputNumeroCasa);
+        Collections.addAll(labels, labelNome, labelCpf, labelEmail, labelUsername, labelSenha, labelConfirmarSenha, labelCep, labelEstado, labelCidade, labelRua, labelNumeroCasa);
 
         IntStream.range(0, Math.min(inputs.size(), labels.size())).forEach(i -> {
             JTextField input = inputs.get(i);
@@ -64,28 +79,46 @@ public class Cadastro extends JDialog {
         JButton submitButton = new JButton("Cadastrar");
         submitButton.setPreferredSize(new java.awt.Dimension(400, 40));
         submitButton.addActionListener(e -> {
-            if (inputs.stream().allMatch(input -> !input.getText().trim().isEmpty())) {                
-                inputs.stream().forEach(input -> {
+            if (inputs.stream().allMatch(input -> !input.getText().trim().isEmpty())) {
+                boolean hasError = inputs.stream().anyMatch(input -> {
                     String nomeCampo = input.getName();
 
                     if (nomeCampo != null) {
-                        gerencia.getUsuarios().forEach((id, usuario)-> {
-                             if(nomeCampo == "cpf" && usuario.getCpf() == input.getText()) {
-                                JOptionPane.showMessageDialog(this, "Já existe um usuario com este cpf");
-                                dispose();
-                            } else if (nomeCampo.equals("email") && usuario.getEmail() == input.getText()) {
-                                JOptionPane.showMessageDialog(this, "Já existe um usuario com este email");
-                                dispose();
-                            } else if (nomeCampo.equals("username") && usuario.getUsername() == input.getText()) {
-                                JOptionPane.showMessageDialog(this, "Já existe um usuario com este username");
-                                dispose();
+                        for (Map.Entry<Integer, Usuario> entry : gerencia.getUsuarios().entrySet()) {
+                            Usuario usuario = entry.getValue();
+                            if (nomeCampo.equals("cpf") && usuario.getCpf().equals(input.getText())) {
+                                JOptionPane.showMessageDialog(this, "Já existe um usuário com este CPF.");
+                                return true;
+                            } else if (nomeCampo.equals("email") && usuario.getEmail().equals(input.getText())) {
+                                JOptionPane.showMessageDialog(this, "Já existe um usuário com este email.");
+                                return true;
+                            } else if (nomeCampo.equals("username") && usuario.getUsername().equals(input.getText())) {
+                                JOptionPane.showMessageDialog(this, "Já existe um usuário com este username.");
+                                return true;
                             }
-                        });
+                        }
                     }
+                    return false;
                 });
 
-                JOptionPane.showMessageDialog(this, "Cadastro realizado com sucesso!");
-                dispose(); // Fecha a janela após o cadastro
+                String senha = new String(((JPasswordField) inputSenha).getPassword());
+                String confirmarSenha = new String(((JPasswordField) inputConfirmarSenha).getPassword());
+
+                if (senha.equals(confirmarSenha) && !hasError) {
+                    Usuario u = new Usuario(inputNome.getText(), inputCpf.getText(), inputEmail.getText(), senha, inputUsername.getText());
+                    Endereco endereco = new Endereco(u.getId(), inputCep.getText(), inputEstado.getText(), inputCidade.getText(), inputRua.getText(), Integer.parseInt(inputNumeroCasa.getText()));
+                    u.adicionarEndereco(endereco);
+
+                    gerencia.salvarUsuario(u);
+                } else if (!hasError){
+                    hasError = true;
+                    JOptionPane.showMessageDialog(this, "As senhas precisam ser iguais.");
+                }
+
+                if (!hasError) {
+                    JOptionPane.showMessageDialog(this, "Cadastro realizado com sucesso!");
+                    dispose();
+                }
             } else {
                 JOptionPane.showMessageDialog(this, "Por favor, preencha todos os campos.");
             }
@@ -93,8 +126,9 @@ public class Cadastro extends JDialog {
         add(submitButton, BorderLayout.SOUTH);
         
         // Configurações da janela
-        setSize(400, 300);
+        setSize(400, 500);
         setLocationRelativeTo(null);
         setVisible(true);
-    }  
+        setResizable(false);
+    }
 }

@@ -9,12 +9,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class Main {
     private static GerenciarDados gerencia = new GerenciarDados();
 
     public static void main(String[] args) {
-        gerencia.carregarUsuarios();
+        System.out.println(gerencia.getUsuarios());
 
         Color corFundo = Color.decode("#06ADBF");
         Color corTexto = Color.decode("#0B4359");
@@ -25,6 +27,17 @@ public class Main {
         frame.setSize(700, 500);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().setBackground(corFundo);
+
+        // Adicionando um WindowListener para capturar o evento de fechamento da janela
+        frame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                System.out.println("Janela fechada.");
+                System.out.println("Serializando dados...");
+                gerencia.serializarUsuarios();
+                System.out.println("Dados serializados com sucesso!");
+            }
+        });
 
         // Criando campo de email 
         JTextField inputEmail = new JTextField();
@@ -68,6 +81,12 @@ public class Main {
                 String senha = new String(inputSenha.getPassword());
 
                 Login logar = new Login(login, senha, gerencia.getUsuarios());
+
+                if (logar.getLogged()) {
+                    System.out.println("Login bem sucedido!");
+                } else {
+                    System.out.println("Login mal sucedido!");
+                }
             }
         });
 

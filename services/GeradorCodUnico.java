@@ -1,9 +1,10 @@
 package services;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class GeradorCodUnico {
+public class GeradorCodUnico implements Serializable {
     private Random gerador = new Random();
     private int codigo;
     private ArrayList<Integer> listaCodigos = new ArrayList<Integer>();

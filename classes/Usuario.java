@@ -2,8 +2,9 @@ package classes;
 
 import java.util.ArrayList;
 import services.GeradorCodUnico;
+import java.io.Serializable;
 
-public class Usuario {
+public class Usuario implements Serializable {
     private Integer id; 
     private GeradorCodUnico gerador = new GeradorCodUnico();
     private ArrayList<Endereco> enderecos = new ArrayList<>();
@@ -56,5 +57,10 @@ public class Usuario {
 
     public Integer getId() {
         return id;
+    }
+
+    @Override
+    public String toString() {
+        return "[Nome: " + nome + ", CPF: " + cpf + ", Email: " + email + ", Username: " + username + "]";
     }
 }

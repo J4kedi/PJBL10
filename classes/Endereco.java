@@ -1,6 +1,8 @@
 package classes;
 
-public class Endereco {
+import java.io.Serializable;
+
+public class Endereco implements Serializable {
     private Integer id;
     private String cep;
     private String estado;
