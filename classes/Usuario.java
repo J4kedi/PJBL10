@@ -61,6 +61,6 @@ public class Usuario implements Serializable {
 
     @Override
     public String toString() {
-        return "[Nome: " + nome + ", CPF: " + cpf + ", Email: " + email + ", Username: " + username + "]";
+        return "\n[Nome: " + nome + ", CPF: " + cpf + ", Email: " + email + ", Username: " + username + " " + enderecos + "]";
     }
 }

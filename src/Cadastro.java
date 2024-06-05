@@ -101,7 +101,6 @@ public class Cadastro extends JDialog {
                                 try {
                                     Integer.parseInt(texto);
                                 } catch (NumberFormatException erro) {
-                                    System.out.println("Não é um número.");
                                     JOptionPane.showMessageDialog(this, "Digite um número para a casa");
                                     return true;
                                 }
