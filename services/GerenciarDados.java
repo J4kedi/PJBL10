@@ -9,10 +9,10 @@ public class GerenciarDados {
     private HashMap<Integer, Usuario> usuarios = new HashMap<>();
     
     public GerenciarDados(){
-        carregarUsuarios();
+        carregarDados();
     }
 
-    public void carregarUsuarios() {
+    public void carregarDados() {
         usuarios = Empacotamento.lerArquivo(FILE_PATH_DADOS);
     }
 

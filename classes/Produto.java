@@ -1,8 +1,10 @@
 package classes;
 
+import java.io.Serializable;
+
 import services.GeradorCodUnico;
 
-public class Produto {
+public class Produto implements Serializable {
     private GeradorCodUnico gerarId = new GeradorCodUnico();
     private String nome;
     private String descricao;

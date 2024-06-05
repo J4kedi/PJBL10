@@ -22,7 +22,7 @@ public class Carrinho {
         }
     }
 
-    public ArrayList<Produto> getListaProdutos() {
+    public ArrayList<Produto> getProdutos() {
         return listaProdutos;
     }
 
