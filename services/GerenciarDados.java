@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import classes.Usuario;
 
-public class GerenciarDados{
+public class GerenciarDados {
     private static final String FILE_PATH_DADOS = "dados\\dados.ser";
     private HashMap<Integer, Usuario> usuarios = new HashMap<>();
     

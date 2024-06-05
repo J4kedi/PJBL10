@@ -83,8 +83,13 @@ public class Main {
                 Login logar = new Login(login, senha, gerencia.getUsuarios());
 
                 if (logar.getLogged()) {
+                    frame.setVisible(false);
+
+                    Cardapio cardapio = new Cardapio(Login.getUsuario());
+
                     System.out.println("Login bem sucedido!");
                 } else {
+                    JOptionPane.showMessageDialog(frame, "Credenciais inválidas.");
                     System.out.println("Login mal sucedido!");
                 }
             }

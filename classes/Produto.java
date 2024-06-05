@@ -5,13 +5,15 @@ import services.GeradorCodUnico;
 public class Produto {
     private GeradorCodUnico gerarId = new GeradorCodUnico();
     private String nome;
+    private String descricao;
     private int id;
     private Double preco;
-    private Double avaliacao;
+    private static Double avaliacao;
 
-    public Produto(String nome, Double preco) {
+    public Produto(String nome, Double preco, String descricao) {
         this.nome = nome;
         this.preco = preco;
+        this.descricao = descricao;
         this.id = gerarId.getCodigo();
     }
 
@@ -21,6 +23,10 @@ public class Produto {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public String getDescricao() {
+        return descricao;
     }
 
     public int getId() {
@@ -39,7 +45,7 @@ public class Produto {
         return avaliacao;
     }
 
-    public void setAvaliacao(Double avaliacao) {
-        this.avaliacao = avaliacao;
+    public static void avaliar(Double nota) {
+        avaliacao += nota;
     }
 }
