@@ -57,6 +57,7 @@ public class Cadastro extends JDialog {
 
         JTextField inputNumeroCasa = new JTextField();
         JLabel labelNumeroCasa = new JLabel("Número: ");
+        inputNumeroCasa.setName("numeroCasa");
 
         ArrayList<JTextField> inputs = new ArrayList<>();
         ArrayList<JLabel> labels = new ArrayList<>();
@@ -86,15 +87,24 @@ public class Cadastro extends JDialog {
                     if (nomeCampo != null) {
                         for (Map.Entry<Integer, Usuario> entry : gerencia.getUsuarios().entrySet()) {
                             Usuario usuario = entry.getValue();
-                            if (nomeCampo.equals("cpf") && usuario.getCpf().equals(input.getText())) {
+                            String texto = input.getText();
+                            if (nomeCampo.equals("cpf") && usuario.getCpf().equals(texto)) {
                                 JOptionPane.showMessageDialog(this, "Já existe um usuário com este CPF.");
                                 return true;
-                            } else if (nomeCampo.equals("email") && usuario.getEmail().equals(input.getText())) {
+                            } else if (nomeCampo.equals("email") && usuario.getEmail().equals(texto)) {
                                 JOptionPane.showMessageDialog(this, "Já existe um usuário com este email.");
                                 return true;
-                            } else if (nomeCampo.equals("username") && usuario.getUsername().equals(input.getText())) {
+                            } else if (nomeCampo.equals("username") && usuario.getUsername().equals(texto)) {
                                 JOptionPane.showMessageDialog(this, "Já existe um usuário com este username.");
                                 return true;
+                            } else if (nomeCampo.equals("numeroCasa")) {
+                                try {
+                                    Integer.parseInt(texto);
+                                } catch (NumberFormatException erro) {
+                                    System.out.println("Não é um número.");
+                                    JOptionPane.showMessageDialog(this, "Digite um número para a casa");
+                                    return true;
+                                }
                             }
                         }
                     }

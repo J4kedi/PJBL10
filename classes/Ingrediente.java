@@ -1,18 +1,11 @@
 package classes;
 
-import java.io.Serializable;
-
-public class Ingrediente implements Serializable {
-    private String nome;
-    private String descricao;
-    private Double precoUnidade;
+public class Ingrediente extends Produto {
     private Double quantidade;
     private Double precoTotal;    
 
     public Ingrediente(String nome, String descricao, Double precoUnidade, Double quantidade) {
-        this.nome = nome;
-        this.descricao = descricao;
-        this.precoUnidade = precoUnidade;
+        super(nome, precoUnidade, descricao);
         this.quantidade = quantidade;
         caclcularTotal();
     }
@@ -30,19 +23,7 @@ public class Ingrediente implements Serializable {
     }
 
     private void caclcularTotal() {
-        precoTotal = precoUnidade * quantidade;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public String getDescricao() {
-        return descricao;
-    }
-
-    public Double getPrecoUnidade() {
-        return precoUnidade;
+        precoTotal = this.getPreco() * quantidade;
     }
 
     public Double getQuantidade() {

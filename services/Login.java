@@ -17,9 +17,11 @@ public class Login {
 
             user = usuario;
 
+            System.out.println("Senha do usuario: " + usuario.getSenha() + "\nSenha colocada: " + senha + "\n Logar? " + senha.equals(usuario.getSenha()));
+
             if (isValidEmail(usernameOrEmail) && (senha.equals(usuario.getSenha()) && usernameOrEmail.equals(usuario.getEmail()))) {
                 isLogged = true;
-            } else if (senha.equals(usuario.getSenha()) && usernameOrEmail.equals(usuario.getEmail())) {
+            } else if (senha.equals(usuario.getSenha()) && usernameOrEmail.equals(usuario.getUsername())) {
                 isLogged = true;
             }
         });

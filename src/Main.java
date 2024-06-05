@@ -32,9 +32,9 @@ public class Main {
         frame.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-                System.out.println("Janela fechada.");
+                System.out.println("\nJanela fechada.");
                 System.out.println("Serializando dados...");
-                gerencia.serializarUsuarios();
+                gerencia.serializarDados();
                 System.out.println("Dados serializados com sucesso!");
             }
         });

@@ -6,18 +6,17 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
-import classes.Usuario;
 
 public class Empacotamento {
-    public static void gravarArquivo(HashMap<Integer, Usuario> map, String nomeArq) {
+    public static void gravarArquivo(HashMap<Integer, ArrayList<Serializable>> map, String nomeArq) {
         try {
             ObjectOutputStream objOutput = new ObjectOutputStream(new FileOutputStream(nomeArq));
-            objOutput.writeObject(map);
+            objOutput.writeObject(map); 
 
             objOutput.close();
-
-            System.out.println("Dados carregados com sucesso!");
         } catch (IOException erro) {
             System.out.println("Erro: " + erro.getMessage());
             erro.printStackTrace();
@@ -25,13 +24,13 @@ public class Empacotamento {
     }
 
     @SuppressWarnings("unchecked")
-    public static HashMap<Integer, Usuario> lerArquivo(String nomeArq) {
-        HashMap<Integer, Usuario> map = new HashMap<>();
+    public static HashMap<Integer, ArrayList<Serializable>> lerArquivo(String nomeArq) {
+        HashMap<Integer, ArrayList<Serializable>> map = new HashMap<>();
         try {
             File arq = new File(nomeArq);
             if (arq.exists()) {
                 ObjectInputStream objInput = new ObjectInputStream(new FileInputStream(arq));
-                map = (HashMap<Integer, Usuario>) objInput.readObject();
+                map = (HashMap<Integer, ArrayList<Serializable>>) objInput.readObject();
                 objInput.close();
 
                 System.out.println("Dados lidos com sucesso!");
