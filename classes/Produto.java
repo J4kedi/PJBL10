@@ -11,11 +11,13 @@ public class Produto implements Serializable {
     private int id;
     private Double preco;
     private static Double avaliacao;
+    private String IMAGE_PATH;
 
-    public Produto(String nome, Double preco, String descricao) {
+    public Produto(String nome, Double preco, String descricao, String imagePath) {
         this.nome = nome;
         this.preco = preco;
         this.descricao = descricao;
+        this.IMAGE_PATH = imagePath;
         this.id = gerarId.getCodigo();
     }
 
@@ -49,5 +51,14 @@ public class Produto implements Serializable {
 
     public static void avaliar(Double nota) {
         avaliacao += nota;
+    }
+
+    public String getIMAGE_PATH() {
+        return IMAGE_PATH;
+    }
+
+    @Override
+    public String toString() {
+        return "[Nome: " + nome + ", Descrição: " + descricao + ", Preço: " + preco + ", Avaliação: " + avaliacao + "]";
     }
 }

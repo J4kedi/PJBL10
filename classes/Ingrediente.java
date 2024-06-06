@@ -4,8 +4,8 @@ public class Ingrediente extends Produto {
     private Double quantidade;
     private Double precoTotal;    
 
-    public Ingrediente(String nome, String descricao, Double precoUnidade, Double quantidade) {
-        super(nome, precoUnidade, descricao);
+    public Ingrediente(String nome, String descricao, Double precoUnidade, Double quantidade, String imagePath) {
+        super(nome, precoUnidade, descricao, imagePath);
         this.quantidade = quantidade;
         caclcularTotal();
     }

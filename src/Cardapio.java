@@ -1,51 +1,53 @@
-import classes.Pizza;
-import classes.Usuario;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.util.ArrayList;
-import java.util.Collections;
+import java.awt.GridLayout;
+import java.util.HashMap;
+import java.util.List;
 
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
+import javax.swing.JPanel;
+import classes.Produto;
+import classes.Usuario;
+import services.GerenciarDados;
 
 public class Cardapio {
-    public Cardapio(Usuario usuario, JFrame mainFrame) {
-        Color corFundo = Color.decode("#06ADBF");
-        Color corTexto = Color.decode("#0B4359");
+    private MenuPanel menuPanel = new MenuPanel();
+    private JFrame frame = new JFrame("Pizzaria Java");
+    private GerenciarDados gerencia;
 
-        // Criando a janela
-        JFrame frame = new JFrame("Pizzaria Java");
+    public Cardapio(Usuario usuario, JFrame mainFrame, GerenciarDados gerencia) {
+        this.gerencia = gerencia;
+
+        menuPanel.setBounds(0, 0, 700, 60);
+
         frame.setSize(700, 500);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.getContentPane().setBackground(corFundo);
+        frame.getContentPane().setBackground(menuPanel.getCorFundo());
         frame.setLayout(null);
         frame.setResizable(false);
         frame.setVisible(true);
 
-        frame.addWindowListener(new WindowAdapter() {
+        frame.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
-            public void windowClosing(WindowEvent e) {
+            public void windowClosing(java.awt.event.WindowEvent e) {
                 mainFrame.setVisible(true);
             }
         });
 
-        JLabel labelTitulo = new JLabel("Pizzaria");
-        labelTitulo.setFont(new Font("SansSerif", Font.BOLD, 38));
-        labelTitulo.setBounds(5, 5, 200, 40);
+        frame.add(menuPanel);
+        exibirCardapio();
+    }
 
-        ArrayList<JLabel> labels = new ArrayList<>();
-        ArrayList<JTextField> inputs = new ArrayList<>();
-        Collections.addAll(labels, labelTitulo);
-        // Collections.addAll(inputs, labelTitulo);
+    private void exibirCardapio() {
+        JPanel cardapioPanel = new JPanel();
+        cardapioPanel.setLayout(new GridLayout(0, 3, 20, 20));
+        cardapioPanel.setBounds(10, 70, 680, 390);
+        cardapioPanel.setBackground(menuPanel.getCorFundo());
 
-        labels.stream().forEach(label -> {
-            label.setForeground(corTexto);
-            frame.add(label);
-        });
+        for (HashMap.Entry<Integer, Produto> p : gerencia.getProdutos().entrySet()) {
+            Produto produto = p.getValue();
+            CardPanel card = new CardPanel(produto);
+            cardapioPanel.add(card);
+        }
 
-        ArrayList<Pizza> listaPizzas  = new ArrayList<>();
+        frame.add(cardapioPanel);
     }
 }

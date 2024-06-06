@@ -14,10 +14,7 @@ public class Login {
     public Login(String usernameOrEmail, String senha, Map<Integer, Usuario> u) {
         u.keySet().forEach(key -> {
             Usuario usuario = u.get(key);
-
             user = usuario;
-
-            System.out.println("Senha do usuario: " + usuario.getSenha() + "\nSenha colocada: " + senha + "\n Logar? " + senha.equals(usuario.getSenha()));
 
             if (isValidEmail(usernameOrEmail) && (senha.equals(usuario.getSenha()) && usernameOrEmail.equals(usuario.getEmail()))) {
                 isLogged = true;

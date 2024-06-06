@@ -16,6 +16,7 @@ public class Main {
 
     public static void main(String[] args) {
         System.out.println(gerencia.getUsuarios());
+        System.out.println(gerencia.getProdutos());
 
         Color corFundo = Color.decode("#06ADBF");
         Color corTexto = Color.decode("#0B4359");
@@ -38,7 +39,6 @@ public class Main {
             }
         });
 
-        // Criando campo de email 
         JTextField inputEmail = new JTextField();
         JLabel labelEmail = new JLabel("Email ou Username:");
         inputEmail.setBounds(100, 100, 170, 30);
@@ -83,8 +83,7 @@ public class Main {
 
                 if (logar.getLogged()) {
                     frame.setVisible(false);
-
-                    Cardapio cardapio = new Cardapio(Login.getUsuario(), frame);
+                    Cardapio cardapio = new Cardapio(Login.getUsuario(), frame, gerencia);
 
                     System.out.println("Login bem sucedido!");
                 } else {

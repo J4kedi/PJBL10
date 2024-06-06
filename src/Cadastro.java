@@ -119,6 +119,7 @@ public class Cadastro extends JDialog {
                     u.adicionarEndereco(endereco);
 
                     gerencia.salvarUsuario(u);
+                    gerencia.serializarDados();
                 } else if (!hasError){
                     hasError = true;
                     JOptionPane.showMessageDialog(this, "As senhas precisam ser iguais.");

@@ -13,6 +13,7 @@ public class Usuario implements Serializable {
     private String email;
     private String senha;
     private String username;
+    private Integer nivelPermissao = 0;
 
     public Usuario(String nome, String cpf, String email, String senha, String username) {
         this.nome = nome;
@@ -57,6 +58,14 @@ public class Usuario implements Serializable {
 
     public Integer getId() {
         return id;
+    }
+
+    public Integer getNivelPermissao() {
+        return nivelPermissao;
+    }
+
+    public void setNivelPermissao(Integer nivelPermissao) {
+        this.nivelPermissao = nivelPermissao;
     }
 
     @Override
