@@ -70,6 +70,6 @@ public class Usuario implements Serializable {
 
     @Override
     public String toString() {
-        return "\n[Nome: " + nome + ", CPF: " + cpf + ", Email: " + email + ", Username: " + username + " " + enderecos + "]";
+        return "\n[Nome: " + nome + ", CPF: " + cpf + ", Email: " + email + ", Username: " + username + " , Endereços: " + enderecos + "]";
     }
 }
