@@ -1,7 +1,6 @@
 package classes;
 
 import java.io.Serializable;
-
 import services.GeradorCodUnico;
 
 public class Produto implements Serializable {

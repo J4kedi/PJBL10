@@ -38,11 +38,13 @@ public class Cardapio {
 
     private void exibirCardapio() {
         JPanel cardapioPanel = new JPanel();
-        cardapioPanel.setLayout(new GridLayout(0, 3, 20, 20));
+        HashMap<Integer, Produto> produtos = gerencia.getProdutos();
+
+        cardapioPanel.setLayout(new GridLayout(produtos.size() % 3, 3, 20, 20));
         cardapioPanel.setBounds(10, 70, 680, 390);
         cardapioPanel.setBackground(menuPanel.getCorFundo());
 
-        for (HashMap.Entry<Integer, Produto> p : gerencia.getProdutos().entrySet()) {
+        for (HashMap.Entry<Integer, Produto> p : produtos.entrySet()) {
             Produto produto = p.getValue();
             CardPanel card = new CardPanel(produto);
             cardapioPanel.add(card);

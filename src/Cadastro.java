@@ -5,6 +5,7 @@ import services.GerenciarDados;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Map;
@@ -75,10 +76,22 @@ public class Cadastro extends JDialog {
             cadastro.add(input);
         });
 
+        
         add(cadastro, BorderLayout.CENTER);
-
+        
         JButton submitButton = new JButton("Cadastrar");
         submitButton.setPreferredSize(new java.awt.Dimension(400, 40));
+
+        for (JTextField input : inputs) {
+            input.getInputMap(JComponent.WHEN_FOCUSED).put(KeyStroke.getKeyStroke("ENTER"), "submit");
+            input.getActionMap().put("submit", new AbstractAction() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    submitButton.doClick();
+                }
+            });
+        }
+        
         submitButton.addActionListener(e -> {
             if (inputs.stream().allMatch(input -> !input.getText().trim().isEmpty())) {
                 boolean hasError = inputs.stream().anyMatch(input -> {
