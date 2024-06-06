@@ -33,7 +33,7 @@ public class Empacotamento {
                 map = (HashMap<Integer, ArrayList<Serializable>>) objInput.readObject();
                 objInput.close();
 
-                System.out.println("Dados lidos com sucesso!");
+                System.out.println("\nDados lidos com sucesso!");
             }
         } catch (IOException erro1) {
             System.out.println("Erro: " + erro1.getMessage());

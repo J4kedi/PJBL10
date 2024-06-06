@@ -2,7 +2,6 @@ import javax.swing.*;
 
 import services.GerenciarDados;
 import services.Login;
-
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.event.ActionEvent;
@@ -85,7 +84,7 @@ public class Main {
                 if (logar.getLogged()) {
                     frame.setVisible(false);
 
-                    Cardapio cardapio = new Cardapio(Login.getUsuario());
+                    Cardapio cardapio = new Cardapio(Login.getUsuario(), frame);
 
                     System.out.println("Login bem sucedido!");
                 } else {

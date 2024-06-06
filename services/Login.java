@@ -28,7 +28,7 @@ public class Login {
     }
 
     public static boolean isValidEmail(String email) {
-        Matcher match = EMAIL_PATTERN.matcher(EMAIL_REGEX);
+        Matcher match = EMAIL_PATTERN.matcher(email);
         return match.matches();
     }
 
