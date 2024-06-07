@@ -71,6 +71,7 @@ public class GerenciarDados {
         }
         listaUsuarios.add(u);
         usuarios.put(u.getId(), u);
+        serializarDados();
     }
 
     public void salvarProduto(Produto p) {
@@ -80,6 +81,7 @@ public class GerenciarDados {
             dados.put(1, listaProdutos);
         }
         listaProdutos.add(p);
+        serializarDados();
     }
 
     public void salvarIngrediente(Ingrediente i) {
@@ -89,6 +91,7 @@ public class GerenciarDados {
             dados.put(2, listaIngredientes);
         }
         listaIngredientes.add(i);
+        serializarDados();
     }
 
     public void serializarDados() {

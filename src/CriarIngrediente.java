@@ -90,11 +90,13 @@ public class CriarIngrediente extends JDialog {
                     Ingrediente ingrediente = new Ingrediente(inputNome.getText(), inputDescricao.getText(), precoUnidade, quantidade, PATH_IMAGE);
 
                     gerencia.salvarIngrediente(ingrediente);
+
+                    JOptionPane.showMessageDialog(this, "Ingrediente criado com sucesso!");
+                    dispose();
                 } catch (NumberFormatException er) {
                     JOptionPane.showMessageDialog(this, "Preencha os campos de preço e quantidade com números");
                     er.printStackTrace();
                 }
-
             } else {
                 JOptionPane.showMessageDialog(this, "Por favor, preencha todos os campos.");
             }

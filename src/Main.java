@@ -1,5 +1,7 @@
 import javax.swing.*;
 
+import classes.Pizza;
+import classes.Produto;
 import services.GerenciarDados;
 import services.Login;
 import java.awt.Color;
@@ -18,6 +20,14 @@ public class Main {
         System.out.println(gerencia.getUsuarios());
         System.out.println(gerencia.getProdutos());
         System.out.println(gerencia.getIngredientes());
+
+        gerencia.getProdutos().keySet().stream().forEach(k -> {
+            if (gerencia.getProdutos().get(k) instanceof Pizza) {
+                Pizza p = (Pizza) gerencia.getProdutos().get(k);
+
+                System.out.println(p.getIngredientes());
+            }
+        });
 
         Color corFundo = Color.decode("#06ADBF");
         Color corTexto = Color.decode("#0B4359");

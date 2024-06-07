@@ -113,11 +113,13 @@ public class CriarPizza extends JDialog {
                     Pizza pizza = new Pizza(inputNome.getText(), inputTamanho.getText(), inputDescricao.getText(), preco, getSelectedIngredientes(listIngredientes), inputSabor.getText(), PATH_IMAGE);
 
                     gerencia.salvarProduto(pizza);
+
+                    JOptionPane.showMessageDialog(this, "Pizza criada com sucesso!");
+                    dispose();
                 } catch (NumberFormatException er) {
                     JOptionPane.showMessageDialog(this, "Preencha o preço com número");
                     er.printStackTrace();
                 }
-
             } else {
                 JOptionPane.showMessageDialog(this, "Por favor, preencha todos os campos.");
             }

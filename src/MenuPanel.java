@@ -5,6 +5,8 @@ import java.awt.event.MouseAdapter;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
+
 import services.GerenciarDados;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -26,7 +28,7 @@ public class MenuPanel extends JPanel {
         labelTitulo.setBounds(5, 5, 150, 40);
 
         JLabelWithLine linhaMenu = new JLabelWithLine("");
-        linhaMenu.setBounds(0, 35, 700, 20);
+        linhaMenu.setBounds(0, 35, 800, 20);
         linhaMenu.setLineColor(corLinhaMenu);
         linhaMenu.setName("linha");
         
@@ -36,26 +38,26 @@ public class MenuPanel extends JPanel {
         labelCardapio.setFont(fontePadrao);
         
         JLabel labelCarrinho = new JLabel("Carrinho");
-        labelCarrinho.setBounds(465, 20, 80, 25);
+        labelCarrinho.setBounds(565, 20, 80, 25);
         labelCarrinho.setFont(fontePadrao);
         
         JLabel labelPerfil = new JLabel("Perfil");
-        labelPerfil.setBounds(545, 20, 55, 25);
+        labelPerfil.setBounds(645, 20, 55, 25);
         labelPerfil.setFont(fontePadrao);
 
         JLabel labelLogout = new JLabel("Logout");
-        labelLogout.setBounds(600, 20, 65, 25);
+        labelLogout.setBounds(700, 20, 65, 25);
         labelLogout.setFont(fontePadrao);
 
         ArrayList<JLabel> labels = new ArrayList<>();
 
         if (permissao == 0) {
             JLabel labelCriarPizza = new JLabel("CriarPizza");
-            labelCriarPizza.setBounds(365, 20, 100, 25);
+            labelCriarPizza.setBounds(465, 20, 100, 25);
             labelCriarPizza.setFont(fontePadrao);
 
             JLabel labelCriarIngrediente = new JLabel("CriarIngrediente");
-            labelCriarIngrediente.setBounds(265, 20, 120, 25);
+            labelCriarIngrediente.setBounds(315, 20, 150, 25);
             labelCriarIngrediente.setFont(fontePadrao);
 
             labelCriarPizza.addMouseListener(new MouseAdapter() {
@@ -97,6 +99,14 @@ public class MenuPanel extends JPanel {
             }
 
             add(label);
+        });
+
+        labelLogout.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                parent.setVisible(true);
+                SwingUtilities.getWindowAncestor(MenuPanel.this).dispose();
+            }
         });
     }
 
