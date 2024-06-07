@@ -1,7 +1,16 @@
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Font;
+import java.awt.Label;
+import java.awt.event.MouseAdapter;
+
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
+import services.GerenciarDados;
+
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -12,7 +21,7 @@ public class MenuPanel extends JPanel {
     private Color corJanelaAtual = Color.MAGENTA;
     private Font fontePadrao = new Font("SansSerif", Font.PLAIN, 20);
 
-    public MenuPanel() {
+    public MenuPanel(Integer permissao, JFrame parent, GerenciarDados gerencia) {
         setLayout(null);
         setBackground(corFundo);
 
@@ -23,6 +32,7 @@ public class MenuPanel extends JPanel {
         JLabelWithLine linhaMenu = new JLabelWithLine("");
         linhaMenu.setBounds(0, 35, 700, 20);
         linhaMenu.setLineColor(corLinhaMenu);
+        linhaMenu.setName("linha");
         
         JLabelWithLine labelCardapio = new JLabelWithLine("Cardápio");
         labelCardapio.setBounds(170, 20, 82, 25);
@@ -42,10 +52,43 @@ public class MenuPanel extends JPanel {
         labelLogout.setFont(fontePadrao);
 
         ArrayList<JLabel> labels = new ArrayList<>();
+
+        if (permissao == 0) {
+            JLabel labelCriarPizza = new JLabel("CriarPizza");
+            labelCriarPizza.setBounds(370, 20, 100, 25);
+            labelCriarPizza.setFont(fontePadrao);
+
+            labelCriarPizza.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    new CriarPizza(parent, gerencia);
+                }
+            });
+
+            Collections.addAll(labels, labelCriarPizza);
+        }
+        
         Collections.addAll(labels, labelTitulo, linhaMenu, labelLogout, labelCardapio, labelCarrinho, labelPerfil);
 
         labels.stream().forEach(label -> {
             label.setForeground(corTexto);
+
+            if (label.getName() == null) {
+                label.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+
+                label.addMouseListener(new MouseAdapter() {
+                    @Override
+                    public void mouseEntered(MouseEvent e) {
+                        label.setForeground(Color.WHITE);
+                    }
+
+                    @Override
+                    public void mouseExited(MouseEvent e) {
+                        label.setForeground(corTexto);
+                    }
+                });
+            }
+
             add(label);
         });
     }

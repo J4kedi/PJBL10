@@ -1,6 +1,5 @@
 import java.awt.GridLayout;
 import java.util.HashMap;
-import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -9,13 +8,15 @@ import classes.Usuario;
 import services.GerenciarDados;
 
 public class Cardapio {
-    private MenuPanel menuPanel = new MenuPanel();
     private JFrame frame = new JFrame("Pizzaria Java");
     private GerenciarDados gerencia;
+    private Usuario usuario;
+    private MenuPanel menuPanel;
 
     public Cardapio(Usuario usuario, JFrame mainFrame, GerenciarDados gerencia) {
         this.gerencia = gerencia;
-
+        this.usuario = usuario;
+        menuPanel = new MenuPanel(usuario.getNivelPermissao(), mainFrame, gerencia);
         menuPanel.setBounds(0, 0, 700, 60);
 
         frame.setSize(700, 500);
