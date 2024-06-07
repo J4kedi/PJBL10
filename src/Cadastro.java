@@ -69,7 +69,6 @@ public class Cadastro extends JDialog {
             JTextField input = inputs.get(i);
             JLabel label = labels.get(i);
             
-            input.setPreferredSize(new java.awt.Dimension(170, 30));
             label.setForeground(corTexto);
             
             cadastro.add(label);

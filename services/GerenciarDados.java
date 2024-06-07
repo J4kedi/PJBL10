@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
+import classes.Ingrediente;
 import classes.Produto;
 import classes.Usuario;
 
@@ -12,6 +14,7 @@ public class GerenciarDados {
     private HashMap<Integer, ArrayList<Serializable>> dados = new HashMap<>();
     HashMap<Integer, Usuario> usuarios = new HashMap<>();
     HashMap<Integer, Produto> produtos = new HashMap<>();
+    HashMap<Integer, Ingrediente> ingredientes = new HashMap<>();
     
     public GerenciarDados(){
         carregarDados();
@@ -21,6 +24,7 @@ public class GerenciarDados {
         dados = Empacotamento.lerArquivo(FILE_PATH_DADOS);
         carregarUsuarios();
         carregarProdutos();
+        carregarIngredientes();
     }
 
     private void carregarUsuarios() {
@@ -47,6 +51,18 @@ public class GerenciarDados {
         }
     }
 
+    public void carregarIngredientes() {
+        ArrayList<Serializable> listaIngredientes = dados.get(2);
+        if (listaIngredientes != null) {
+            for (Serializable serializable : listaIngredientes) {
+                if (serializable instanceof Ingrediente) {
+                    Ingrediente ingrediente = (Ingrediente) serializable;
+                    ingredientes.put(ingrediente.getId(), ingrediente);
+                }
+            }
+        }
+    }
+
     public void salvarUsuario(Usuario u) {
         ArrayList<Serializable> listaUsuarios = dados.get(0);
         if (listaUsuarios == null) {
@@ -66,6 +82,15 @@ public class GerenciarDados {
         listaProdutos.add(p);
     }
 
+    public void salvarIngrediente(Ingrediente i) {
+        ArrayList<Serializable> listaIngredientes = dados.get(2);
+        if (listaIngredientes == null) {
+            listaIngredientes = new ArrayList<>();
+            dados.put(2, listaIngredientes);
+        }
+        listaIngredientes.add(i);
+    }
+
     public void serializarDados() {
         Empacotamento.gravarArquivo(dados, FILE_PATH_DADOS);
     }
@@ -76,5 +101,9 @@ public class GerenciarDados {
 
     public HashMap<Integer, Produto> getProdutos() {
         return produtos;
+    }
+
+    public HashMap<Integer, Ingrediente> getIngredientes() {
+        return ingredientes;
     }
 }

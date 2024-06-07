@@ -17,6 +17,7 @@ public class Main {
     public static void main(String[] args) {
         System.out.println(gerencia.getUsuarios());
         System.out.println(gerencia.getProdutos());
+        System.out.println(gerencia.getIngredientes());
 
         Color corFundo = Color.decode("#06ADBF");
         Color corTexto = Color.decode("#0B4359");
@@ -24,7 +25,7 @@ public class Main {
 
         // Criando a janela
         JFrame frame = new JFrame("Pizzaria Java");
-        frame.setSize(700, 500);
+        frame.setSize(800, 600);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().setBackground(corFundo);
 

@@ -1,15 +1,11 @@
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Font;
-import java.awt.Label;
 import java.awt.event.MouseAdapter;
-
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
 import services.GerenciarDados;
-
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -27,7 +23,7 @@ public class MenuPanel extends JPanel {
 
         JLabel labelTitulo = new JLabel("Pizzaria");
         labelTitulo.setFont(new Font("SansSerif", Font.BOLD, 38));
-        labelTitulo.setBounds(5, 5, 140, 40);
+        labelTitulo.setBounds(5, 5, 150, 40);
 
         JLabelWithLine linhaMenu = new JLabelWithLine("");
         linhaMenu.setBounds(0, 35, 700, 20);
@@ -35,28 +31,32 @@ public class MenuPanel extends JPanel {
         linhaMenu.setName("linha");
         
         JLabelWithLine labelCardapio = new JLabelWithLine("Cardápio");
-        labelCardapio.setBounds(170, 20, 82, 25);
+        labelCardapio.setBounds(170, 20, 85, 25);
         labelCardapio.setLineColor(corJanelaAtual);
         labelCardapio.setFont(fontePadrao);
         
         JLabel labelCarrinho = new JLabel("Carrinho");
-        labelCarrinho.setBounds(465, 20, 75, 25);
+        labelCarrinho.setBounds(465, 20, 80, 25);
         labelCarrinho.setFont(fontePadrao);
         
         JLabel labelPerfil = new JLabel("Perfil");
-        labelPerfil.setBounds(545, 20, 50, 25);
+        labelPerfil.setBounds(545, 20, 55, 25);
         labelPerfil.setFont(fontePadrao);
 
         JLabel labelLogout = new JLabel("Logout");
-        labelLogout.setBounds(600, 20, 60, 25);
+        labelLogout.setBounds(600, 20, 65, 25);
         labelLogout.setFont(fontePadrao);
 
         ArrayList<JLabel> labels = new ArrayList<>();
 
         if (permissao == 0) {
             JLabel labelCriarPizza = new JLabel("CriarPizza");
-            labelCriarPizza.setBounds(370, 20, 100, 25);
+            labelCriarPizza.setBounds(365, 20, 100, 25);
             labelCriarPizza.setFont(fontePadrao);
+
+            JLabel labelCriarIngrediente = new JLabel("CriarIngrediente");
+            labelCriarIngrediente.setBounds(265, 20, 120, 25);
+            labelCriarIngrediente.setFont(fontePadrao);
 
             labelCriarPizza.addMouseListener(new MouseAdapter() {
                 @Override
@@ -65,7 +65,14 @@ public class MenuPanel extends JPanel {
                 }
             });
 
-            Collections.addAll(labels, labelCriarPizza);
+            labelCriarIngrediente.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    new CriarIngrediente(parent, gerencia);
+                }
+            });
+
+            Collections.addAll(labels, labelCriarPizza, labelCriarIngrediente);
         }
         
         Collections.addAll(labels, labelTitulo, linhaMenu, labelLogout, labelCardapio, labelCarrinho, labelPerfil);

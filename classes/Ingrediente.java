@@ -33,4 +33,9 @@ public class Ingrediente extends Produto {
     public Double getPrecoTotal() {
         return precoTotal;
     }
+
+    @Override
+    public String toString() {
+        return getNome();
+    }
 }
