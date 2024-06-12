@@ -5,6 +5,7 @@ import services.GerenciarDados;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -70,6 +71,8 @@ public class CriarIngrediente extends JDialog {
                 selectedFile = chooserFilePath.getSelectedFile();
                 PATH_IMAGE = "dados/imagens/" + selectedFile.getName();
                 System.out.println("Arquivo selecionado: " + PATH_IMAGE);
+            } else {
+                JOptionPane.showMessageDialog(this, "Por favor, escolha uma imagem");
             }
         });
 
@@ -80,8 +83,10 @@ public class CriarIngrediente extends JDialog {
                 try {
                     Files.copy(selectedFile.toPath(), Paths.get(PATH_IMAGE));
                     System.out.println("Arquivo salvo em: " + PATH_IMAGE);
+                } catch (FileAlreadyExistsException ep) {
+                    System.out.println("Arquivo já existente: " + PATH_IMAGE);
                 } catch (IOException ex) {
-                    ex.printStackTrace();
+                   ex.printStackTrace();
                 }
 
                 try {

@@ -1,7 +1,6 @@
 import javax.swing.*;
 
 import classes.Pizza;
-import classes.Produto;
 import services.GerenciarDados;
 import services.Login;
 import java.awt.Color;
@@ -109,7 +108,7 @@ public class Main {
 
                 if (logar.getLogged()) {
                     frame.setVisible(false);
-                    Cardapio cardapio = new Cardapio(Login.getUsuario(), frame, gerencia);
+                    new Cardapio(Login.getUsuario(), frame, gerencia);
 
                     System.out.println("Login bem sucedido!");
                 } else {

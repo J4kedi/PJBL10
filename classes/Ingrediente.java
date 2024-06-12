@@ -1,5 +1,7 @@
 package classes;
 
+import java.util.Objects;
+
 public class Ingrediente extends Produto {
     private Double quantidade;
     private Double precoTotal;    
@@ -32,6 +34,19 @@ public class Ingrediente extends Produto {
 
     public Double getPrecoTotal() {
         return precoTotal;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Ingrediente that = (Ingrediente) o;
+        return this.getId() == that.getId();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.getId());
     }
 
     @Override

@@ -2,13 +2,18 @@ import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
+
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
+import classes.Carrinho;
 import services.GerenciarDados;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -19,7 +24,7 @@ public class MenuPanel extends JPanel {
     private Color corJanelaAtual = Color.MAGENTA;
     private Font fontePadrao = new Font("SansSerif", Font.PLAIN, 20);
 
-    public MenuPanel(Integer permissao, JFrame parent, GerenciarDados gerencia) {
+    public MenuPanel(Integer permissao, JFrame parent, GerenciarDados gerencia, Carrinho carrinho) {
         setLayout(null);
         setBackground(corFundo);
 
@@ -63,23 +68,61 @@ public class MenuPanel extends JPanel {
             labelCriarPizza.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
-                    new CriarPizza(parent, gerencia);
+                    CriarPizza criarPizza = new CriarPizza(parent, gerencia);
+
+                    criarPizza.addWindowListener(new WindowAdapter() {
+                        @Override
+                        public void windowClosed(WindowEvent e) {
+                            gerencia.carregarProdutos();
+                        }
+                    });
                 }
             });
 
             labelCriarIngrediente.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
-                    new CriarIngrediente(parent, gerencia);
+                    JDialog criarIngrediente = new CriarIngrediente(parent, gerencia);
+
+                    criarIngrediente.addWindowListener(new WindowAdapter() {
+                        @Override
+                        public void windowClosed(WindowEvent e) {
+                            gerencia.carregarIngredientes();
+                        }
+                    });
                 }
             });
 
             Collections.addAll(labels, labelCriarPizza, labelCriarIngrediente);
         }
         
+        labelCarrinho.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                JDialog exibirCarrinho = new ExibirCarrinho(parent, gerencia, carrinho);
+
+                exibirCarrinho.addWindowListener(new java.awt.event.WindowAdapter() {
+                    @Override
+                    public void windowClosed(java.awt.event.WindowEvent e) {
+                        gerencia.carregarCarrinhos();
+                    }
+                });
+            };
+        });
+
+        labelCardapio.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                parent.getContentPane().removeAll();
+                new Cardapio(gerencia.getUsuarios().get(carrinho.getUsuarioId()), parent, gerencia);
+                parent.revalidate();
+                parent.repaint();
+            }
+        });
+
         Collections.addAll(labels, labelTitulo, linhaMenu, labelLogout, labelCardapio, labelCarrinho, labelPerfil);
 
-        labels.stream().forEach(label -> {
+        labels.forEach(label -> {
             label.setForeground(corTexto);
 
             if (label.getName() == null) {

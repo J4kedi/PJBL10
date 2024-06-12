@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import classes.Carrinho;
 import classes.Ingrediente;
 import classes.Produto;
 import classes.Usuario;
@@ -12,11 +13,12 @@ import classes.Usuario;
 public class GerenciarDados {
     private static final String FILE_PATH_DADOS = "dados\\dados.ser";
     private HashMap<Integer, ArrayList<Serializable>> dados = new HashMap<>();
-    HashMap<Integer, Usuario> usuarios = new HashMap<>();
-    HashMap<Integer, Produto> produtos = new HashMap<>();
-    HashMap<Integer, Ingrediente> ingredientes = new HashMap<>();
+    private HashMap<Integer, Usuario> usuarios = new HashMap<>();
+    private HashMap<Integer, Produto> produtos = new HashMap<>();
+    private HashMap<Integer, Ingrediente> ingredientes = new HashMap<>();
+    private HashMap<Integer, Carrinho> carrinhos = new HashMap<>();
     
-    public GerenciarDados(){
+    public GerenciarDados() {
         carregarDados();
     }
 
@@ -25,9 +27,10 @@ public class GerenciarDados {
         carregarUsuarios();
         carregarProdutos();
         carregarIngredientes();
+        carregarCarrinhos();
     }
 
-    private void carregarUsuarios() {
+    public void carregarUsuarios() {
         ArrayList<Serializable> listaUsuarios = dados.get(0);
         if (listaUsuarios != null) {
             for (Serializable serializable : listaUsuarios) {
@@ -39,7 +42,7 @@ public class GerenciarDados {
         }
     } 
 
-    private void carregarProdutos() {
+    public void carregarProdutos() {
         ArrayList<Serializable> listaProdutos = dados.get(1);
         if (listaProdutos != null) {
             for (Serializable serializable : listaProdutos) {
@@ -58,6 +61,18 @@ public class GerenciarDados {
                 if (serializable instanceof Ingrediente) {
                     Ingrediente ingrediente = (Ingrediente) serializable;
                     ingredientes.put(ingrediente.getId(), ingrediente);
+                }
+            }
+        }
+    }
+
+    public void carregarCarrinhos() {
+        ArrayList<Serializable> listaCarrinhos = dados.get(3);
+        if (listaCarrinhos != null) {
+            for (Serializable serializable : listaCarrinhos) {
+                if (serializable instanceof Carrinho) {
+                    Carrinho carrinho = (Carrinho) serializable;
+                    carrinhos.put(carrinho.getUsuarioId(), carrinho);
                 }
             }
         }
@@ -92,6 +107,23 @@ public class GerenciarDados {
         }
         listaIngredientes.add(i);
         serializarDados();
+    }
+
+    public void salvarCarrinho(Carrinho c) {
+        ArrayList<Serializable> listaCarrinhos = dados.get(3);
+        if (listaCarrinhos == null) {
+            listaCarrinhos = new ArrayList<>();
+            dados.put(3, listaCarrinhos);
+        }
+        carrinhos.put(c.getUsuarioId(), c);
+
+        listaCarrinhos.clear();
+        listaCarrinhos.addAll(carrinhos.values());
+        serializarDados();
+    }
+
+    public Carrinho obterCarrinho(int usuarioId) {
+        return carrinhos.get(usuarioId);
     }
 
     public void serializarDados() {

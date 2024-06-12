@@ -7,7 +7,7 @@ import java.util.Random;
 public class GeradorCodUnico implements Serializable {
     private Random gerador = new Random();
     private int codigo;
-    private static ArrayList<Integer> listaCodigos = new ArrayList<Integer>();
+    private static ArrayList<Integer> listaCodigos = new ArrayList<Integer>(){{add(1);}};
 
     private void gerarCod() {
         do {

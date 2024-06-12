@@ -1,29 +1,39 @@
 package classes;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Carrinho {
+public class Carrinho implements Serializable{
     private ArrayList<Produto> listaProdutos = new ArrayList<>();
+    private Integer usuarioId;
 
-    public void exibirCarrinho(){
-        listaProdutos.stream().forEach(System.out::println);
+    public Carrinho(Integer usuarioId) {
+        this.usuarioId = usuarioId;
     }
     
     public void adicionarProduto(Produto p) {
         listaProdutos.add(p);
     }
 
-    public void removerProduto(Produto p) {
+    public String removerProduto(Produto p) {
         if(listaProdutos.isEmpty()) {
-            System.out.println("Carrinho vazio!");
+            return "Carrinho vazio!";
         } else {
             listaProdutos.remove(p);
-            System.out.println("Produto removido com sucesso!");
+            return "Produto removido com sucesso!";
         }
+    }
+
+    public void limpar() {
+        listaProdutos.clear();
     }
 
     public ArrayList<Produto> getProdutos() {
         return listaProdutos;
+    }
+
+    public Integer getUsuarioId() {
+        return usuarioId;
     }
 
     @Override
