@@ -1,9 +1,16 @@
 package services;
 
 public class CarrinhoVazioException extends Exception{
-    public CarrinhoVazioException(String msg){
-        super(msg);
+    public CarrinhoVazioException(String mensagem) {
+        super(mensagem);
     }
 
-    public CarrinhoVazioException(String msg, )
+    public CarrinhoVazioException() {
+        super();
+    }
+
+    @Override
+    public String getMessage() {
+        return "Carrinho está vazio";
+    }
 }

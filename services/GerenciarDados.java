@@ -34,10 +34,8 @@ public class GerenciarDados {
         ArrayList<Serializable> listaUsuarios = dados.get(0);
         if (listaUsuarios != null) {
             for (Serializable serializable : listaUsuarios) {
-                if (serializable instanceof Usuario) {
-                    Usuario usuario = (Usuario) serializable;
-                    usuarios.put(usuario.getId(), usuario);
-                }
+                Usuario usuario = (Usuario) serializable;
+                usuarios.put(usuario.getId(), usuario);
             }
         }
     } 
@@ -46,10 +44,8 @@ public class GerenciarDados {
         ArrayList<Serializable> listaProdutos = dados.get(1);
         if (listaProdutos != null) {
             for (Serializable serializable : listaProdutos) {
-                if (serializable instanceof Produto) {
-                    Produto produto = (Produto) serializable;
-                    produtos.put(produto.getId(), produto);
-                }
+                Produto produto = (Produto) serializable;
+                produtos.put(produto.getId(), produto);
             }
         }
     }
@@ -58,10 +54,8 @@ public class GerenciarDados {
         ArrayList<Serializable> listaIngredientes = dados.get(2);
         if (listaIngredientes != null) {
             for (Serializable serializable : listaIngredientes) {
-                if (serializable instanceof Ingrediente) {
-                    Ingrediente ingrediente = (Ingrediente) serializable;
-                    ingredientes.put(ingrediente.getId(), ingrediente);
-                }
+                Ingrediente ingrediente = (Ingrediente) serializable;
+                ingredientes.put(ingrediente.getId(), ingrediente);
             }
         }
     }
@@ -70,10 +64,8 @@ public class GerenciarDados {
         ArrayList<Serializable> listaCarrinhos = dados.get(3);
         if (listaCarrinhos != null) {
             for (Serializable serializable : listaCarrinhos) {
-                if (serializable instanceof Carrinho) {
-                    Carrinho carrinho = (Carrinho) serializable;
-                    carrinhos.put(carrinho.getUsuarioId(), carrinho);
-                }
+                Carrinho carrinho = (Carrinho) serializable;
+                carrinhos.put(carrinho.getUsuarioId(), carrinho);
             }
         }
     }

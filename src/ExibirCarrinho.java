@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.util.List;
 import classes.Carrinho;
 import classes.Produto;
+import services.CarrinhoVazioException;
 import services.GerenciarDados;
 
 public class ExibirCarrinho extends JDialog {
@@ -34,10 +35,18 @@ public class ExibirCarrinho extends JDialog {
         botaoComprarTudo.setBackground(Color.decode("#402232"));
         botaoComprarTudo.setForeground(Color.WHITE);
         botaoComprarTudo.addActionListener(e -> {
-            JOptionPane.showMessageDialog(parent, "Todos os produtos foram comprados!");
-            carrinho.limpar();
-            gerencia.salvarCarrinho(carrinho);
-            dispose();
+            try {
+                if (carrinho.getProdutos().isEmpty()) {
+                    throw new CarrinhoVazioException();
+                }
+                carrinho.limpar();
+                JOptionPane.showMessageDialog(parent, "Todos os produtos foram comprados!");
+                gerencia.salvarCarrinho(carrinho);
+                dispose();
+            } catch (CarrinhoVazioException ce) {
+                JOptionPane.showMessageDialog(parent, "Carrinho vazio, favor adicionar itens a ele, antes de comprar!");
+                ce.printStackTrace();
+            }
         });
 
         controlePanel.add(botaoComprarTudo);
@@ -91,7 +100,7 @@ public class ExibirCarrinho extends JDialog {
             botaoRemover.setForeground(Color.WHITE);
             botaoRemover.addActionListener(new ActionListener() {
                 @Override
-                public void actionPerformed(ActionEvent e) {
+                public void actionPerformed(ActionEvent e) throws ClassCastException {
                     carrinho.removerProduto(produto);
                     gerencia.salvarCarrinho(carrinho);
                     atualizarCarrinho();
